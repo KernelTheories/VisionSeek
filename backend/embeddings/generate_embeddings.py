@@ -5,7 +5,8 @@ import numpy as np
 from tqdm import tqdm
 from torch.utils.data import DataLoader
 from torchvision import transforms
-from utils.dataloader import FashionDataset
+from backend.utils.dataloader import FashionDataset
+from backend.utils.dataloader import FashionDataset
 
 model, _, preprocess = open_clip.create_model_and_transforms(
     'ViT-B-32',
@@ -15,7 +16,7 @@ model, _, preprocess = open_clip.create_model_and_transforms(
 model.eval()
 
 dataset = FashionDataset(
-    root_dir="../dataset/subset_images",
+    root_dir="datasets/DeepFashionSubset",
     transform=preprocess
 )
 
@@ -23,7 +24,7 @@ loader = DataLoader(
     dataset,
     batch_size=64,
     shuffle=False,
-    num_workers=4
+    num_workers=0
 )
 
 all_embeddings = []
@@ -54,17 +55,17 @@ all_embeddings = np.vstack(all_embeddings)
 print("Embedding shape:", all_embeddings.shape)
 
 np.save(
-    "../dataset/image_embeddings.npy",
+    "datasets/embeddings/image_embeddings.npy",
     all_embeddings
 )
 
 np.save(
-    "../dataset/image_paths.npy",
+    "datasets/embeddings/image_paths.npy",
     np.array(all_paths)
 )
 
 np.save(
-    "../dataset/image_labels.npy",
+    "datasets/embeddings/image_labels.npy",
     np.array(all_labels)
 )
 

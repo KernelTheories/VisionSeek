@@ -5,7 +5,7 @@ import random
 
 class FashionDataset(Dataset):
     def __init__(self, root_dir, transform = None):
-        self.root_dir = root_dir
+        self.root_dir = Path(root_dir)
         self.transform = transform
 
         self.samples = []
